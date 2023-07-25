@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <title>Polls App</title>
+    <body>
+        {% if latest_question_list %}
+            <ul>
+            {% for question in latest_question_list %}
+                {% comment %}
+                    "<li><a href="/polls/{{ question.id }}/">{{ question.question_text }}</a></li>""
+                    Link was partially hardcoded (tightly-coupled approach)
+                    It becomes challenging to change URLs on projects with a lot of templates.
+                    Change to:
+                    "<li><a href="{% url 'detail' question.id %}">{{ question.question_text }}</a></li>"
+                    Point at the namespaced detail view
+                    Change to:
+                    <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+                {% endcomment %}
+                <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>No polls are available.</p>
+        {% endif %}
+    </body>
+</html>
